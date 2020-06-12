@@ -45,6 +45,11 @@ export default {
           to: { name: "Dashboard" }
         },
         {
+          title: "Downloads",
+          icon: "mdi-download",
+          to: { name: "Downloads" }
+        },
+        {
           title: "Help",
           icon: "mdi-help",
           to: { name: "Help" }
