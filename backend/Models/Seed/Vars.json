@@ -1,0 +1,63 @@
+[
+    {
+        "name": "ult_num_cycles",
+        "value": "10"
+    },
+    {
+        "name": "ult_capacity",
+        "value": "1"
+    },
+    {
+        "name": "ult_source_data_path",
+        "value": "C:/DriveGym/MiniULT/Data"
+    },
+    {
+        "name": "ult_target_data_directory",
+        "value": "/Target"
+    },
+    {
+        "name": "ult_optional_arguments",
+        "value": ""
+    },
+    {
+        "name": "ssh_username",
+        "value": "sandisk"
+    },
+    {
+        "name": "ssh_password",
+        "value": "Flash123"
+    },
+    {
+        "name": "ssh_local_path",
+        "value": "C:/DriveGym/MiniULT/placeholder.log"
+    },
+    {
+        "name": "ssh_destination_dir",
+        "value": "{{ playbook_dir }}/../Logs"
+    },
+    {
+        "name": "ult_log",
+        "value": "C:/DriveGym/MiniULT/ult"
+    },
+    {
+        "name": "smtp_username",
+        "value": "gdiadmin@wdc.com"
+    },
+    {
+        "name": "smtp_password",
+        "value": ""
+    },
+    {
+        "name": "notification_list",
+        "value": "akhilesh.rn@wdc.com, luv.singh@wdc.com, yuvaraj.sh@wdc.com"
+    },
+    {
+        "name": "file_path",
+        "value": "C:/DriveGym/MiniULT/placeholder.log"
+    },
+    {
+        "name": "task_name",
+        "value": "MiniULT.exe"
+    }
+
+]

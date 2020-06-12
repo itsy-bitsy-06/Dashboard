@@ -1,0 +1,358 @@
+[
+    {
+        "id": 1,
+        "name": "Connectivity Test",
+        "builtin": true,
+        "display": "default",
+        "steps": [
+            {
+                "name": "Connectivity test",
+                "operation": "win_ping",
+                "args": "{}",
+                "become": false,
+                "sync": true
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Windows Install Python",
+        "builtin": true,
+        "display": "default",
+        "steps": [
+            {
+                "name": "Connectivity test",
+                "operation": "win_ping",
+                "args": "{}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Create Destination",
+                "operation":"win_file",
+                "args":"{\"path\": \"C:/DriveGym\", \"state\": \"directory\"}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Download package",
+                "operation":"win_get_url",
+                "args":"{\"dest\": \"C:/DriveGym/python-3.8.1.exe\", \"url\": \"https://www.python.org/ftp/python/3.8.1/python-3.8.1.exe\"}",
+                "become": false,
+                "sync": false
+            },
+            {
+                "name": "Install python",
+                "operation": "win_package",
+                "args": "{\"path\": \"C:/DriveGym/python-3.8.1.exe\", \"arguments\": \"/quiet Include_launcher=0 Include_tcltk=0 InstallAllUsers=1 PrependPath=1 Include_test=0\", \"productid\": \"auto\", \"state\": \"present\"}",
+                "become": false,
+                "sync": false
+            },
+            {
+                "name": "Install pip packages",
+                "operation": "win_command",
+                "args": "{\"cmd\": \"cmd\", \"_raw_params\": \"python -m pip install psutil requests pywin32 paramiko click\"}",
+                "become": false,
+                "sync": true
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Reboot systems",
+        "display": "default",
+        "builtin": true,
+        "steps": [
+            {
+                "name": "Rebooting... ",
+                "operation": "win_ping",
+                "args": "{}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Restarted",
+                "operation": "win_reboot",
+                "args": "{\"reboot_timeout\": \"600\"}",
+                "become": false,
+                "sync": true
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "Windows Detect Removable Devices",
+        "builtin": true,
+        "display": "detect_device",
+        "steps": [
+            {
+                "name": "Connectivity test",
+                "operation": "win_ping",
+                "args": "{}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Create Destination",
+                "operation":"win_file",
+                "args":"{\"path\": \"C:/DriveGym\", \"state\": \"directory\"}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Copy script",
+                "operation": "win_copy",
+                "args": "{\"src\": \"{{playbook_dir}}/../../Library/Delegates/detect_device_delegate.py\", \"dest\": \"C:/DriveGym/detect_device_delegate.py\"}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Run script to detect",
+                "operation": "win_command",
+                "args": "{\"cmd\": \"cmd\", \"_raw_params\": \"python C:/DriveGym/detect_device_delegate.py --server {{ ansible_server }} --system_id {{ system_id }} --task {{ task_id }}\"}",
+                "become": false,
+                "sync": true
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Windows Fetch data to server.",
+        "builtin": true,
+        "display": "fetch_log_file",
+        "steps": [
+            {
+                "name": "Connectivity test",
+                "operation": "win_ping",
+                "args": "{}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Create Destination",
+                "operation":"win_file",
+                "args":"{\"path\": \"C:/DriveGym\", \"state\": \"directory\"}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Copy script",
+                "operation": "win_copy",
+                "args": "{\"src\": \"{{playbook_dir}}/../../Library/Delegates/fetch_large_file.py\", \"dest\": \"C:/DriveGym/fetch_large_file.py\"}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Run script to copy large file",
+                "operation": "win_command",
+                "args": "{\"cmd\": \"cmd\", \"_raw_params\": \"python C:/DriveGym/fetch_large_file.py --server {{ ansible_server }} --user {{ ssh_username }} --password {{ ssh_password }} --remotepath {{ ssh_destination_dir }} --localpath {{ ssh_local_path }} --system {{ system_id }} --task {{ task_id }}  --linked {{ linked_task  | default('None') }} \"}",
+                "become": false,
+                "sync": false
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Mini ULT runner",
+        "builtin": true,
+        "display": "ult",
+        "steps": [
+            {
+                "name": "Connectivity test",
+                "operation": "win_ping",
+                "args": "{}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Create Destination",
+                "operation":"win_file",
+                "args":"{\"path\": \"C:/DriveGym\", \"state\": \"directory\"}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Copy MiniULT Application",
+                "operation": "win_get_url",
+                "args": "{\"url\": \"http://{{ansible_server}}:8000/api/downloads/MiniULT.zip?path=Bin\", \"dest\": \"C:/DriveGym/\", \"validate_certs\": \"no\"}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Extract MiniULT Application",
+                "operation": "win_unzip",
+                "args": "{\"src\": \"C:/DriveGym/MiniULT.zip\", \"dest\": \"C:/DriveGym/MiniULT\"}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Copy script",
+                "operation": "win_copy",
+                "args": "{\"src\": \"{{playbook_dir}}/../../Library/Delegates/mini_ult_runner_parallel.py\", \"dest\": \"C:/DriveGym/MiniULT/mini_ult_runner_parallel.py\"}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Run ULT wrapper",
+                "operation": "win_command",
+                "args": "{\"cmd\": \"cmd\", \"_raw_params\": \"python C:/DriveGym/MiniULT/mini_ult_runner_parallel.py --devices '{{ devices }}' --cycles {{ ult_num_cycles }} --capacity {{ ult_capacity }} --data {{ ult_source_data_path }} --target {{ ult_target_data_directory }} --server {{ ansible_server }} --system {{ system_id }} --task {{ task_id }} --logpath {{ ult_log }} --opt_args '{{ ult_optional_arguments }}'\"}",
+                "become": false,
+                "sync": false
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "name": "Check Disk Space on clients",
+        "builtin": true,
+        "display": "capacity_check",
+        "steps": [
+            {
+                "name": "Connectivity test",
+                "operation": "win_ping",
+                "args": "{}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Create Destination",
+                "operation":"win_file",
+                "args":"{\"path\": \"C:/DriveGym\", \"state\": \"directory\"}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Copy script",
+                "operation": "win_copy",
+                "args": "{\"src\": \"{{playbook_dir}}/../../Library/Delegates/check_space_delegate.py\", \"dest\": \"C:/DriveGym/check_space_delegate.py\"}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Check space wrapper",
+                "operation": "win_command",
+                "args": "{\"cmd\": \"cmd\", \"_raw_params\": \"python C:/DriveGym/check_space_delegate.py --server {{ ansible_server }} --system_id {{ system_id }} --task {{ task_id }}\"}",
+                "become": false,
+                "sync": true
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "name": "Format removable drives",
+        "builtin": true,
+        "display": "default",
+        "steps": [
+            {
+                "name": "Connectivity test",
+                "operation": "win_ping",
+                "args": "{}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Create Destination",
+                "operation":"win_file",
+                "args":"{\"path\": \"C:/DriveGym\", \"state\": \"directory\"}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Copy script",
+                "operation": "win_copy",
+                "args": "{\"src\": \"{{playbook_dir}}/../../Library/Delegates/disk_format_delegate.py\", \"dest\": \"C:/DriveGym/disk_format_delegate.py\"}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Format removable media.",
+                "operation": "win_command",
+                "args": "{\"cmd\": \"cmd\", \"_raw_params\": \"python C:/DriveGym/disk_format_delegate.py --devices '{{ devices }}' --server {{ ansible_server }} --system {{ system_id }} --task {{ task_id }}\"}",
+                "become": false,
+                "sync": true
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "name": "Delete log file",
+        "builtin": true,
+        "display": "delete_file",
+        "steps": [
+            {
+                "name": "Connectivity Test",
+                "operation": "win_ping",
+                "args": "{}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Create Destination",
+                "operation": "win_file",
+                "args": "{\"path\": \"C:/DriveGym\", \"state\": \"directory\"}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Copy script",
+                "operation": "win_copy",
+                "args": "{\"src\": \"{{playbook_dir}}/../../Library/Delegates/delete_file_delegate.py\", \"dest\": \"C:/DriveGym/delete_file_delegate.py\"}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Delete file",
+                "operation": "win_command",
+                "args": "{\"cmd\": \"cmd\", \"_raw_params\": \"python C:/DriveGym/delete_file_delegate.py --server {{ ansible_server }} --system {{ system_id }} --task {{ task_id }} --filepath '{{ file_path }}'\"}",
+                "become": false,
+                "sync": true
+            }
+
+        ]
+
+    },
+    {
+        "id": 10,
+        "name": "Stop Task Process",
+        "builtin": true,
+        "display": "default",
+        "steps": [
+            {
+                "name": "Connectivity Test",
+                "operation": "win_ping",
+                "args": "{}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Stop Process",
+                "operation": "win_command",
+                "args": "{\"cmd\": \"cmd\", \"_raw_params\": \"taskkill /FI \\\"IMAGENAME eq {{ task_name }} \\\" /F \"}",
+                "become": true,
+                "sync": true
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "name": "Shutdown Systems",
+        "builtin": true,
+        "display": "default",
+        "steps": [
+            {
+                "name": "Connectivity Test",
+                "operation": "win_ping",
+                "args": "{}",
+                "become": false,
+                "sync": true
+            },
+            {
+                "name": "Shutdown Task",
+                "operation": "win_command",
+                "args": "{\"cmd\": \"cmd\", \"_raw_params\": \"shutdown /S \"}",
+                "become": true,
+                "sync": true
+            }
+        ]
+    }
+]
