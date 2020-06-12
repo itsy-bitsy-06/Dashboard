@@ -17,7 +17,7 @@ Gzip(app)
 # Initialize database and Apis
 Controllers.initialize(app)
 Models.initialize(app)
-# print(app.url_map)
+print(app.url_map)
 
 # When routes dont match to anything, send index.html
 @app.errorhandler(404)

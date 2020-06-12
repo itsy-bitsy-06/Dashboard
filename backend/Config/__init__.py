@@ -14,11 +14,10 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = True
     SERVER_ADDRESS = get_ip_address()
-
+    
 class ProductionConfig(Config):
     DEBUG = False
     SQLALCHEMY_ECHO = False
-    EXECUTOR_PROPAGATE_EXCEPTIONS = False
 
 class DevelopmentConfig(Config):
     DEBUG = False

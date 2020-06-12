@@ -1,10 +1,11 @@
+import os
 import time
 import datetime
 from collections import OrderedDict
 from flask import Blueprint, request
 from flask_restful import Resource
 from sqlalchemy import func
-
+from werkzeug import secure_filename
 from Controllers.ApiRef import RootApi
 
 
@@ -32,7 +33,10 @@ class DashboardController(Resource):
         return {}
 
     def post(self):
-        return {}
+        file = request.files['file']
+        filename = os.path.join('./Workspace', secure_filename(file.filename))
+        file.save(filename)
+        return {'path': filename}
 
 DashboardApi = Blueprint('Dashboard', __name__, url_prefix='/api/dashboard')
 __api = RootApi(DashboardApi)
