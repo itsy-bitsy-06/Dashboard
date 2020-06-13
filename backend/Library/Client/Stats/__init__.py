@@ -1,3 +1,3 @@
-from Library.Client.Stats.Excel import GetExcelDump
+from Library.Client.Stats.Excel import ReadExcel
 
-__all__ = ['GetExcelDump']
+__all__ = ['ReadExcel']

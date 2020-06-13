@@ -9,8 +9,8 @@
       <v-card>
         <v-card-title class="headline">Select File tp upload</v-card-title>
         <v-col cols="10" offset="1">
-          <!-- <v-file-input accept="application/vnd.ms-excel" hide-input show-size label="File input"></v-file-input> -->
           <v-file-input
+            accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             v-model="file"
             hide-input
             show-size

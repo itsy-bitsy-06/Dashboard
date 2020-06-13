@@ -2,7 +2,7 @@ import os
 import json
 
 from Models.DbRef import db, ma
-from Models.GroupsModel import GroupsModel, GroupsSchema
+from Models.JirasModel import JirasModel, JirasSchema
 from Models.SeedsModel import ResetOrSeedDb
 
 def initialize(appl):
@@ -10,5 +10,5 @@ def initialize(appl):
     db.init_app(appl)
     ma.init_app(appl)
 
-__all__ = ['initialize', 'GroupsModel', 'GroupsSchema']
+__all__ = ['initialize', 'JirasModel', 'JirasSchema']
 
