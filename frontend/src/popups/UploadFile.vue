@@ -48,6 +48,7 @@ export default {
       await this.$http.post(`${this.baseUrl}/api/dashboard`, formData);
       this.file = null;
       this.dialog = false;
+      this.$emit("input", null);
     }
   }
 };

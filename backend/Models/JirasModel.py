@@ -9,6 +9,9 @@ class JirasModel(db.Model):
     Description = db.Column(db.String(2048))                            # Description for this group
     Created = db.Column(db.DateTime, nullable=False)                    # Creation time
     Duration = db.Column(db.Integer, default=0)                         # Time to Resolution
+    IssueType = db.Column(db.String(16), nullable=False)                # Issue type
+    CustomerRequestType = db.Column(db.String(16), nullable=False)      # Request Type
+    Resolution = db.Column(db.String(16), nullable=False)               # Resolution
 
     def insert(self):
         db.session.add(self)

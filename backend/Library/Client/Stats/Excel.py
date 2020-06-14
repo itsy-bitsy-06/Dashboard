@@ -23,5 +23,7 @@ def created_column_convert(t):
 def ReadExcel(path):
     customize = {'Created': created_column_convert, 'Time to resolution': duration_column_convert }
     df = pd.read_excel(path, sheet_name=0, index_col=None, header=0, converters=customize, keep_default_na=False)
-    df.rename(columns={'Time to resolution': 'Duration', 'Fix Version/s': 'FixVersion'}, inplace=True)
+    df.rename(columns={'Time to resolution': 'Duration', 'Fix Version/s': 'FixVersion', 'Issue Type': 'IssueType'}, inplace=True)
+    df.rename(columns={'Customer Request Type': 'CustomerRequestType'}, inplace=True)
+
     return df.to_dict('records')
