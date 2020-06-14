@@ -43,7 +43,7 @@
       </v-col>
     </v-row>
     <v-container class="mt-0 pt-0">
-      <v-row dense v-if="dashboard">
+      <!-- <v-row dense v-if="dashboard">
         <v-col cols="6">
           <BarChart
             title="Tests Passed this Week"
@@ -62,7 +62,8 @@
             field="week_fail"
           />
         </v-col>
-      </v-row>
+      </v-row> -->
+      <TestChart />
     </v-container>
   </div>
 </template>
@@ -72,7 +73,8 @@
 import Vue from "vue";
 import Header from "../components/Header";
 import InfoChart from "../components/InfoChart";
-import BarChart from "../components/BarChart";
+// import BarChart from "../components/BarChart";
+import TestChart from "../components/TestChart";
 import UploadFile from "../popups/UploadFile";
 
 export default {
@@ -80,7 +82,8 @@ export default {
   components: {
     Header,
     InfoChart,
-    BarChart,
+    // BarChart,
+    TestChart,
     UploadFile
   },
   data() {
@@ -88,15 +91,7 @@ export default {
       dashboard: null,
       crumbs: [
         {
-          text: "Administration",
-          exact: true,
-          disabled: false,
-          to: {
-            name: "Administration"
-          }
-        },
-        {
-          text: "Health",
+          text: "Dashboard",
           exact: true,
           disabled: true,
           to: {

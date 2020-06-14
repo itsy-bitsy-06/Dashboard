@@ -9,6 +9,8 @@ def initialize(appl):
     os.makedirs('./Data', exist_ok=True)
     db.init_app(appl)
     ma.init_app(appl)
+    with appl.app_context():
+        db.create_all()
 
 __all__ = ['initialize', 'JirasModel', 'JirasSchema']
 
