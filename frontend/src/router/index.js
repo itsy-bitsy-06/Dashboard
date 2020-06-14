@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Dashboard from "../views/Dashboard";
 import Downloads from "../views/Downloads";
+import Tabular from "../views/Tabular";
 const Help = () => import("../views/Help");
 
 Vue.use(VueRouter);
@@ -16,6 +17,11 @@ const routes = [
     name: "Downloads",
     path: "/Downloads",
     component: Downloads
+  },
+  {
+    name: "Tabular",
+    path: "/Tabular",
+    component: Tabular
   },
   {
     name: "Help",

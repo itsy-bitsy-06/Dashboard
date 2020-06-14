@@ -10,20 +10,32 @@
           <TestChart v-if="false" />
         </v-col>
         <v-col cols="12">
-          <PieChart title="By Status" :data="pieStatusData" :key="key" />
+          <PieChart
+            title="By Status"
+            field="Status"
+            :data="pieStatusData"
+            :key="key"
+          />
         </v-col>
         <v-col cols="12">
-          <PieChart title="By Issue Type" :data="pieIssueTypeData" :key="key" />
+          <PieChart
+            title="By Issue Type"
+            field="IssueType"
+            :data="pieIssueTypeData"
+            :key="key"
+          />
         </v-col>
         <v-col cols="12">
           <PieChart
             title="By Resolution"
+            field="Resolution"
             :data="pieResolutionData"
             :key="key"
           />
         </v-col>
         <v-col cols="12">
           <PieChart
+            field="CustomerRequestType"
             title="By Customer Request Type"
             :data="pieCustomerRequestTypeData"
             :key="key"

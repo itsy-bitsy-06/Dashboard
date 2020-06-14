@@ -2,8 +2,10 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" width="70%">
       <template v-slot:activator="{ on }">
-        <v-btn color="purple darken-1" icon v-on="on">
-          <v-icon>mdi-attachment</v-icon>
+        <v-btn text icon class="pink darken-2" v-on="on">
+          <v-icon color="blue-grey darken-2">
+            mdi-attachment
+          </v-icon>
         </v-btn>
       </template>
       <v-card>

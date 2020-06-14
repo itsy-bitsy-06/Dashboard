@@ -13,7 +13,7 @@ from Controllers.ApiRef import RootApi
 
 class DashboardController(Resource):
     def get(self):
-        jiras = JirasModel.query.filter().all()
+        jiras = JirasModel.query.filter(**request.args).all()
         schema = JirasSchema(many=True)
         return schema.dump(jiras)
 

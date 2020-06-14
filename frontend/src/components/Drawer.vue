@@ -50,6 +50,11 @@ export default {
           to: { name: "Downloads" }
         },
         {
+          title: "Table",
+          icon: "mdi-format-list-numbered",
+          to: { name: "Tabular" }
+        },
+        {
           title: "Help",
           icon: "mdi-help",
           to: { name: "Help" }

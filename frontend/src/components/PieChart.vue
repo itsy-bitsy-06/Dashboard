@@ -33,7 +33,11 @@ export default {
     },
     title: {
       type: String,
-      default: "What"
+      default: "Chart"
+    },
+    field: {
+      type: String,
+      default: "Unknown"
     }
   },
   mounted() {
@@ -43,12 +47,20 @@ export default {
     chart.depth = 120;
     chart.legend = new am4charts.Legend();
     var series = chart.series.push(new am4charts.PieSeries3D());
+    series.slices.template.events.on("hit", this.nodeClicked);
     series.dataFields.value = this.value;
     series.dataFields.depthValue = this.value;
     series.dataFields.category = this.status;
     series.slices.template.cornerRadius = 5;
     series.colors.step = 3;
     this.chart = chart;
+  },
+  methods: {
+    nodeClicked(y) {
+      let query = {};
+      query[this.field] = y.target.dataItem.category;
+      this.$router.push({ name: "Tabular", query: query });
+    }
   },
   beforeDestroy() {
     if (this.chart) {
