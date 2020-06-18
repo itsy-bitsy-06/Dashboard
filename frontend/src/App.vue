@@ -20,7 +20,6 @@
 
 <script>
 import Drawer from "./components/Drawer";
-import _ from "lodash";
 
 export default {
   name: "App",
@@ -32,35 +31,6 @@ export default {
       snackbar: false,
       event: null
     };
-  },
-  sockets: {
-    async disconnect() {
-      // console.log(`WS Disconnected ${this.$socket.connected}`);
-      while (!this.$socket.connected) {
-        await new Promise(resolve => setTimeout(resolve, 10000));
-        await this.$socket.connect();
-      }
-    },
-    connect_error() {
-      /* eslint-disable no-console */
-      console.clear();
-      /* eslint-enable no-console */
-    },
-    connect_timeout() {
-      /* eslint-disable no-console */
-      console.clear();
-      /* eslint-enable no-console */
-    },
-    UPDATED: _.debounce(function(val) {
-      val = JSON.parse(val);
-      let text = `${val.table} updated with status ${val.status}`.toLowerCase();
-      if (val.status === "NA")
-        text = `${val.table} progress updated`.toLowerCase();
-      if (["Tasks", "Journals"].indexOf(val.table) > -1) {
-        this.event = { text: text, status: val.status };
-        this.snackbar = true;
-      }
-    }, 1000)
   }
 };
 </script>

@@ -87,32 +87,22 @@ export default {
   },
   computed: {
     pieStatusData() {
-      let statuses = ["In Progress", "Resolved"];
-      return this.pieGroupDataBy(statuses, "Status");
+      return this.pieGroupDataBy("Status");
     },
     pieIssueTypeData() {
-      let issues = ["Service Request", "Bug", "Task"];
-      return this.pieGroupDataBy(issues, "IssueType");
+      return this.pieGroupDataBy("IssueType");
     },
     pieResolutionData() {
-      let resolutions = ["Valid", "Invalid"];
-      return this.pieGroupDataBy(resolutions, "Resolution");
+      return this.pieGroupDataBy("Resolution");
     },
     pieCustomerRequestTypeData() {
-      let crts = [
-        "3D Tool",
-        "Supply Chain",
-        "Canvas",
-        "Catalog",
-        "EC Management",
-        "3D-Rendering",
-        "Reports"
-      ];
-      return this.pieGroupDataBy(crts, "CustomerRequestType");
+      return this.pieGroupDataBy("CustomerRequestType");
     }
   },
   methods: {
-    pieGroupDataBy(values, field) {
+    pieGroupDataBy(field) {
+      let items = this.dashboard.map(el => el[field]);
+      var values = Array.from(new Set(items));
       let result = [];
       values.forEach(el => {
         let arr = this.dashboard.filter(f => f[field] === el);
